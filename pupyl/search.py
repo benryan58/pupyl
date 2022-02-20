@@ -74,7 +74,7 @@ class PupylImageSearch:
             import_images = kwargs.get('import_images')
             characteristic = kwargs.get('characteristic')
 
-            if import_images:
+            if import_images is not None:
                 self._import_images = import_images
             else:
                 self._import_images = True
@@ -203,7 +203,7 @@ class PupylImageSearch:
                                 rank, filtered=['internal_path']
                             )['internal_path']
                         ): rank
-                        for rank in ranks
+                        for rank in ranks if os.path.isfile(self.image_database.mount_file_name(rank, 'json'))
                     }
                 except IndexError as index_error:
                     raise FileIsNotImage('Please, check your input images.') \
